@@ -3,8 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BasketController : MonoBehaviour {
+    public AudioClip appleSE;
+    public AudioClip bombSE;
+    private AudioSource _audio;
+
     // Start is called before the first frame update
     void Start() {
+        this._audio = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -18,5 +23,18 @@ public class BasketController : MonoBehaviour {
                 transform.position = new Vector3(x, 0, z);
             }
         }
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        if (other.gameObject.tag == "Apple") {
+            Debug.Log("Tag: Apple");
+            this._audio.PlayOneShot(this.appleSE);
+        }
+        else if (other.gameObject.tag == "Bomb") {
+            Debug.Log("Tag: Bomb");
+            this._audio.PlayOneShot(this.bombSE);
+        }
+
+        Destroy(other.gameObject);
     }
 }
