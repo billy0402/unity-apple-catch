@@ -6,9 +6,11 @@ public class BasketController : MonoBehaviour {
     public AudioClip appleSE;
     public AudioClip bombSE;
     private AudioSource _audio;
+    private GameObject _director;
 
     // Start is called before the first frame update
     void Start() {
+        this._director = GameObject.Find("GameDirector");
         this._audio = GetComponent<AudioSource>();
     }
 
@@ -28,10 +30,12 @@ public class BasketController : MonoBehaviour {
     private void OnTriggerEnter(Collider other) {
         if (other.gameObject.tag == "Apple") {
             Debug.Log("Tag: Apple");
+            this._director.GetComponent<GameDirector>().GetApple();
             this._audio.PlayOneShot(this.appleSE);
         }
         else if (other.gameObject.tag == "Bomb") {
             Debug.Log("Tag: Bomb");
+            this._director.GetComponent<GameDirector>().GetBomb();
             this._audio.PlayOneShot(this.bombSE);
         }
 
